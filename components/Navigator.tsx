@@ -5,14 +5,9 @@ import Home from './Home';
 import Search from './Search';
 import Download from './Download';
 import Profile from './Profile';
-import {useSelector} from 'react-redux';
-import {RootState} from '../featurce/Store';
 
 const Stack = createNativeStackNavigator();
 const Navigat = () => {
-  const value = useSelector((state: RootState) => state.them.mode);
-  const forgound = value ? '#fff' : '#010';
-  const backgroundColor = value ? '#333' : '#eee';
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Home">
@@ -20,36 +15,28 @@ const Navigat = () => {
           name="Home"
           component={Home}
           options={{
-            title: 'Home',
-            headerStyle: {backgroundColor: backgroundColor},
-            headerTintColor: forgound,
+            headerShown: false,
           }}
         />
         <Stack.Screen
           name="Search"
           component={Search}
           options={{
-            title: 'Search',
-            headerStyle: {backgroundColor: backgroundColor},
-            headerTintColor: forgound,
+            headerShown: false,
           }}
         />
         <Stack.Screen
           name="Download"
           component={Download}
           options={{
-            title: 'Download',
-            headerStyle: {backgroundColor: backgroundColor},
-            headerTintColor: forgound,
+            headerShown: false,
           }}
         />
         <Stack.Screen
           name="Profile"
           component={Profile}
           options={{
-            title: 'Profile',
-            headerStyle: {backgroundColor: backgroundColor},
-            headerTintColor: forgound,
+            headerShown: false,
           }}
         />
       </Stack.Navigator>

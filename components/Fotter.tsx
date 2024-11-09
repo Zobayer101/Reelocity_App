@@ -65,7 +65,7 @@ const style = StyleSheet.create({
   OuterFotter: {
     width: '100%',
 
-    height: 70,
+    height: 60,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-around',
