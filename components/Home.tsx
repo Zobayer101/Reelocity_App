@@ -9,24 +9,31 @@ import {
 import React from 'react';
 import Fottor from './Fotter';
 import {RootState} from '../featurce/Store';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import Eye from 'react-native-vector-icons/FontAwesome';
 import Star from 'react-native-vector-icons/Entypo';
 import {useNavigation} from '@react-navigation/native';
+import {ChangePage} from '../featurce/IconSlice';
+import Test from './Test';
 const Home = () => {
   const Navigator = useNavigation();
+  const dispatch = useDispatch();
   const value = useSelector((state: RootState) => state.them.mode);
   const BG = {backgroundColor: value ? '#222' : '#ddd'};
   //const ReversBG = {backgroundColor: value ? '#ddd' : '#222'};
   return (
     <>
       <ScrollView style={[style.Countuner, BG]}>
+        <Test />
         <View style={style.SearchBOx}>
           <TouchableOpacity
             style={[style.SearchNOw]}
-            onPress={() => Navigator.navigate('Search')}>
+            onPress={() => {
+              Navigator.navigate('Search');
+              dispatch(ChangePage('Search'));
+            }}>
             <Eye name="search" size={30} color={'#777'} />
-            <Text style={style.SearchText}>Search for Reelocity..</Text>
+            <Text style={style.SearchText}>Search in Reelocity..</Text>
           </TouchableOpacity>
         </View>
         <View style={style.ContentBox}>
