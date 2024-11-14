@@ -20,6 +20,7 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import RNFetchBlob from 'rn-fetch-blob';
+import ByteCalculator from '../lib/ByteCalculate';
 
 const Download = () => {
   const [progress, setProgress] = useState(0);
@@ -29,7 +30,7 @@ const Download = () => {
   // const [downloadedBytes, setDownloadedBayte] = useState(0);
   const progeessBar = useSharedValue(0);
   const value = useSelector((state: RootState) => state.them.mode);
-  const BG = {backgroundColor: value ? '#222' : '#ddd'};
+  const BG = {backgroundColor: value ? '#000' : '#ddd'};
 
   async function requestStoragePermission() {
     if (Platform.OS === 'android') {
@@ -114,7 +115,7 @@ const Download = () => {
     const DownloadURL =
       'https://drive.google.com/uc?export=download&id=10uDUhH0OiVPi8FZ56dD1toaXoBMuwLw4';
     const {dirs} = RNFetchBlob.fs;
-    const path = `${dirs.DownloadDir}/mySong${num}.mp4`;
+    const path = `${dirs.DownloadDir}/mySongx${num}.mp4`;
 
     let lastTimeUpdate = Date.now();
     let lastByteWritin = 0;
@@ -132,17 +133,19 @@ const Download = () => {
         // console.log(total);
 
         setProgress(percentage);
-        progeessBar.value = withTiming(percentage, {duration: 100});
+        progeessBar.value = withTiming(percentage, {duration: 200});
         const CurrentTime = Date.now();
         const timeDiff = (CurrentTime - lastTimeUpdate) / 1000;
         const byteDiff = currentByteWriten - lastByteWritin;
-        const speed = byteDiff / timeDiff / 1024;
-        setDownloadSpeed(Number(speed.toFixed()));
+        const speed = byteDiff / timeDiff;
+        setDownloadSpeed(speed);
         lastTimeUpdate = CurrentTime;
         lastByteWritin = currentByteWriten;
       })
-      .then(res => {
-        console.log(res.path());
+      .then(() => {
+        setProgress(100);
+        progeessBar.value = withTiming(100, {duration: 200});
+        //console.log(res.path());
       })
       .catch(error => {
         console.log(error);
@@ -167,11 +170,10 @@ const Download = () => {
               </View>
               <View style={style.showDitias}>
                 <Text style={style.NextText}>
-                  {downlodSpeed ? `${downlodSpeed} kB/s` : '0 b/s'}
+                  {downlodSpeed ? `${ByteCalculator(downlodSpeed)}/s` : '0 b/s'}
                 </Text>
                 <Text style={style.NextText}>
-                  {fileSize ? `${(fileSize / (1024 * 1024)).toFixed(2)}` : '0'}{' '}
-                  MB
+                  {fileSize ? `${ByteCalculator(fileSize)}` : '0 bit'}
                 </Text>
               </View>
             </View>
@@ -199,11 +201,12 @@ const Download = () => {
 const style = StyleSheet.create({
   Countuner: {
     width: '100%',
+    paddingTop: 30,
   },
   DownloaderCon: {
     width: '100%',
     height: 110,
-    marginTop: 10,
+    marginTop: 20,
     //backgroundColor: '#888',
   },
   ImageSection: {
@@ -261,9 +264,11 @@ const style = StyleSheet.create({
     width: 300,
     height: 8,
     // backgroundColor: '#cfc',
+
+    justifyContent: 'center',
   },
   ProgressBars: {
-    height: 8,
+    height: 2,
     width: '100%',
     backgroundColor: '#0fc',
     borderRadius: 5,

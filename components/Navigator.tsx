@@ -5,40 +5,20 @@ import Home from './Home';
 import Search from './Search';
 import Download from './Download';
 import Profile from './Profile';
+import Player from './Player';
 
 const Stack = createNativeStackNavigator();
 const Navigat = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen
-          name="Home"
-          component={Home}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="Search"
-          component={Search}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="Download"
-          component={Download}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="Profile"
-          component={Profile}
-          options={{
-            headerShown: false,
-          }}
-        />
+      <Stack.Navigator
+        initialRouteName="Home"
+        screenOptions={{headerShown: false}}>
+        <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen name="Search" component={Search} />
+        <Stack.Screen name="Download" component={Download} />
+        <Stack.Screen name="Profile" component={Profile} />
+        <Stack.Screen name="Player" component={Player} />
       </Stack.Navigator>
     </NavigationContainer>
   );

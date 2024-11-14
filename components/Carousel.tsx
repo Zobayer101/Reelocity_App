@@ -11,7 +11,7 @@ configureReanimatedLogger({
   level: ReanimatedLogLevel.warn,
   strict: false, // Reanimated runs in strict mode by default
 });
-const Test = () => {
+const Carousels = () => {
   const data = [
     {
       id: 1,
@@ -33,7 +33,7 @@ const Test = () => {
   return (
     <Carousel
       width={width}
-      height={300}
+      height={500}
       data={data}
       loop
       autoPlay
@@ -51,9 +51,9 @@ const Test = () => {
 const style = StyleSheet.create({
   sliderText: {
     width,
-    height: 300,
-    padding: 5,
+    height: 500,
+    //padding: 5,
   },
 });
 
-export default Test;
+export default Carousels;

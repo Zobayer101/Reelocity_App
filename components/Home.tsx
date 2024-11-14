@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React from 'react';
+import React, {useEffect} from 'react';
 import Fottor from './Fotter';
 import {RootState} from '../featurce/Store';
 import {useDispatch, useSelector} from 'react-redux';
@@ -14,22 +14,49 @@ import Eye from 'react-native-vector-icons/FontAwesome';
 import Star from 'react-native-vector-icons/Entypo';
 import {useNavigation} from '@react-navigation/native';
 import {ChangePage} from '../featurce/IconSlice';
-import Test from './Test';
+import Carousel from './Carousel';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import Orientation from 'react-native-orientation-locker';
+// import SystemNavigationBar from 'react-native-system-navigation-bar';
+
+//Navigaror type implimant
+type RootStackParmList = {
+  Search: undefined;
+  Player: {itemId: number; link: string};
+};
+
+type NewSearchScreenNavigarorProp = NativeStackNavigationProp<
+  RootStackParmList,
+  'Search'
+>;
+type NewPlayerScreenNavigatorProp = NativeStackNavigationProp<
+  RootStackParmList,
+  'Player'
+>;
+
 const Home = () => {
-  const Navigator = useNavigation();
+  const SearchNavigaror = useNavigation<NewSearchScreenNavigarorProp>();
+  const PlayerNavigaror = useNavigation<NewPlayerScreenNavigatorProp>();
   const dispatch = useDispatch();
+
   const value = useSelector((state: RootState) => state.them.mode);
-  const BG = {backgroundColor: value ? '#222' : '#ddd'};
+
+  useEffect(() => {
+    Orientation.lockToPortrait();
+    //SystemNavigationBar.fullScreen(false);
+  }, []);
+
+  const BG = {backgroundColor: value ? '#000' : '#ddd'};
   //const ReversBG = {backgroundColor: value ? '#ddd' : '#222'};
   return (
     <>
       <ScrollView style={[style.Countuner, BG]}>
-        <Test />
+        <Carousel />
         <View style={style.SearchBOx}>
           <TouchableOpacity
             style={[style.SearchNOw]}
             onPress={() => {
-              Navigator.navigate('Search');
+              SearchNavigaror.navigate('Search');
               dispatch(ChangePage('Search'));
             }}>
             <Eye name="search" size={30} color={'#777'} />
@@ -40,7 +67,14 @@ const Home = () => {
           <Text style={style.HederText}>Most Popular</Text>
           {/* Movie Item */}
           <View style={style.ImaeCon}>
-            <TouchableOpacity style={style.ContentImageBox}>
+            <TouchableOpacity
+              style={style.ContentImageBox}
+              onPress={() =>
+                PlayerNavigaror.navigate('Player', {
+                  itemId: 86,
+                  link: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+                })
+              }>
               <View style={style.ContentHeder}>
                 <Text style={style.Logo}>Logo</Text>
 
@@ -312,7 +346,7 @@ const style = StyleSheet.create({
     padding: 2,
     borderBottomRightRadius: 10,
     borderBottomLeftRadius: 10,
-    elevation: 10,
+    //elevation: 2,
   },
   rattingStar: {
     flexDirection: 'row',

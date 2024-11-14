@@ -14,7 +14,7 @@ import {useSelector} from 'react-redux';
 
 const Search = () => {
   const value = useSelector((state: RootState) => state.them.mode);
-  const BG = {backgroundColor: value ? '#222' : '#ddd'};
+  const BG = {backgroundColor: value ? '#000' : '#ddd'};
   return (
     <>
       <View style={[style.SearchBOx, BG]}>

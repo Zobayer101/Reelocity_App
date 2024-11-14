@@ -21,7 +21,7 @@ const Profile = () => {
   const dispatch = useDispatch();
   const value = useSelector((state: RootState) => state.them.mode);
   const iconColor = {color: value ? '#eee' : '#111'};
-  const BG = {backgroundColor: value ? '#222' : '#ddd'};
+  const BG = {backgroundColor: value ? '#000' : '#ddd'};
   return (
     <>
       <ScrollView style={[style.Countuner, BG]}>

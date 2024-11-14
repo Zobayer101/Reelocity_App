@@ -7,11 +7,41 @@ import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from '../featurce/Store';
 import {useNavigation} from '@react-navigation/native';
 import {ChangePage} from '../featurce/IconSlice';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+
+//Navigarion Type Implimant
+type RootStackParamList = {
+  Home: undefined;
+  Search: undefined;
+  Download: undefined;
+  Profile: undefined;
+};
+type NewHomeScreenNavigarionProp = NativeStackNavigationProp<
+  RootStackParamList,
+  'Home'
+>;
+type NewSearchNavigarorProp = NativeStackNavigationProp<
+  RootStackParamList,
+  'Search'
+>;
+type NewDownloadNavigatorProp = NativeStackNavigationProp<
+  RootStackParamList,
+  'Download'
+>;
+type NewProfileNavigarorProp = NativeStackNavigationProp<
+  RootStackParamList,
+  'Profile'
+>;
+
 const Fottor = () => {
   const value = useSelector((state: RootState) => state.them.mode);
   const Pages = useSelector((state: RootState) => state.page.page);
   const dispatch = useDispatch();
-  const Navigaror = useNavigation();
+  const HomeNavigaror = useNavigation<NewHomeScreenNavigarionProp>();
+  const SearchNavigaror = useNavigation<NewSearchNavigarorProp>();
+  const DownloadNavigror = useNavigation<NewDownloadNavigatorProp>();
+  const ProfileNavigaror = useNavigation<NewProfileNavigarorProp>();
+
   const Homes = Pages === 'Home' ? '#f0c' : value ? '#09eb2b' : '#038015';
   const Searchs = Pages === 'Search' ? '#f0c' : value ? '#09eb2b' : '#038015';
   const DownLoads =
@@ -26,7 +56,7 @@ const Fottor = () => {
         <TouchableOpacity
           style={style.smallBox}
           onPress={() => {
-            Navigaror.navigate('Home');
+            HomeNavigaror.navigate('Home');
             dispatch(ChangePage('Home'));
           }}>
           <Icon name="home" size={34} color={Homes} style={style.IconAlign} />
@@ -34,7 +64,7 @@ const Fottor = () => {
         <TouchableOpacity
           style={style.smallBox}
           onPress={() => {
-            Navigaror.navigate('Search');
+            SearchNavigaror.navigate('Search');
             dispatch(ChangePage('Search'));
           }}>
           <Icon
@@ -47,7 +77,7 @@ const Fottor = () => {
         <TouchableOpacity
           style={style.smallBox}
           onPress={() => {
-            Navigaror.navigate('Download');
+            DownloadNavigror.navigate('Download');
             dispatch(ChangePage('Download'));
           }}>
           <Profile
@@ -60,7 +90,7 @@ const Fottor = () => {
         <TouchableOpacity
           style={style.smallBox}
           onPress={() => {
-            Navigaror.navigate('Profile');
+            ProfileNavigaror.navigate('Profile');
             dispatch(ChangePage('Profile'));
           }}>
           <Profile

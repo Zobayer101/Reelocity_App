@@ -1,6 +1,4 @@
-// console.log(typeof Date.now());
-
-const ByteCalculator = byte => {
+const ByteCalculator = (byte: number) => {
   if (byte < 1024) {
     return byte + ' bit';
   } else if (byte > 1024 && byte < 1048576) {
@@ -16,4 +14,4 @@ const ByteCalculator = byte => {
   // return byte;
 };
 
-console.log(ByteCalculator(4000000000));
+export default ByteCalculator;
