@@ -1,4 +1,5 @@
 import {
+  ActivityIndicator,
   Alert,
   Image,
   ScrollView,
@@ -44,7 +45,7 @@ const Home = () => {
   const [page, setPage] = useState(1);
   const [item, setItems] = useState([]);
   const value = useSelector((state: RootState) => state.them.mode);
-  const {data, error, isFetching, isLoading} = useFetchItemsQuery({page});
+  const {data, isFetching} = useFetchItemsQuery({page});
   useEffect(() => {
     Orientation.lockToPortrait();
     //SystemNavigationBar.fullScreen(false);
@@ -53,9 +54,6 @@ const Home = () => {
     if (data) {
       setItems(Item => [...Item, ...data]);
     }
-    // if (data[-1] == []) {
-
-    // }
   }, [data]);
 
   const MoreDatalode = () => {
@@ -65,11 +63,14 @@ const Home = () => {
   const handelScroll = ({nativeEvent}: any) => {
     const {layoutMeasurement, contentOffset, contentSize} = nativeEvent;
     if (layoutMeasurement.height + contentOffset.y >= contentSize.height - 20) {
-      MoreDatalode();
+      item[item.length - 1][0] === null
+        ? Alert.alert('empty data')
+        : MoreDatalode();
     }
   };
-  console.log(item);
-  console.log(item[item.length - 1] == '');
+  // console.log(item);
+  // console.log(item.length);
+  //console.log(item[item.length - 1][0] === null);
   return (
     <>
       <ScrollView
@@ -92,14 +93,14 @@ const Home = () => {
           <Text style={style.HederText}>Most Popular</Text>
           {/* Movie -----------------------------------------------------------------------------Item */}
 
-          {!1 ? (
-            <View style={style.ImaeCon}>
+          {item.map((value: any, index: React.Key | null | undefined) => (
+            <View style={style.ImaeCon} key={index}>
               <TouchableOpacity
                 style={style.ContentImageBox}
                 onPress={() =>
                   PlayerNavigaror.navigate('Player', {
-                    itemId: 86,
-                    link: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+                    itemId: value[0]?.id,
+                    link: value[0]?.link,
                   })
                 }>
                 <View style={style.ContentHeder}>
@@ -111,25 +112,36 @@ const Home = () => {
 
                   <View style={style.UserView}>
                     <Eye name="eye" size={20} color={'#fff'} />
-                    <Text style={style.ViewText}>20K</Text>
+                    <Text style={style.ViewText}> {value[0]?.view || ''}</Text>
                   </View>
                 </View>
                 <Image
-                  source={require('./assets/Img/VENOM-Movie-Collector.png')}
+                  source={{
+                    uri: `http://192.168.222.224:3300/uploads/${value[0]?.poster}`,
+                  }}
                   style={style.Poster}
                 />
                 <View style={style.MovieRatting}>
                   <View style={style.rattingStar}>
                     <Star name="star" size={18} color={'#FFD700'} />
-                    <Text style={style.ViewText}>7.0</Text>
+                    <Text style={style.ViewText}>{value[0]?.star || ''}</Text>
                   </View>
-                  <Text style={style.ViewText}>VENOM</Text>
+                  <Text style={style.ViewText}>
+                    {value[0]?.movieName || ''}
+                  </Text>
                 </View>
               </TouchableOpacity>
 
               {/* Secound ------------------------------------------------------------Item */}
 
-              <TouchableOpacity style={style.ContentImageBox}>
+              <TouchableOpacity
+                style={style.ContentImageBox}
+                onPress={() =>
+                  PlayerNavigaror.navigate('Player', {
+                    itemId: value[0]?.id,
+                    link: value[0]?.link,
+                  })
+                }>
                 <View style={style.ContentHeder}>
                   {/* <Text style={style.Logo}>Logo</Text> */}
                   <Image
@@ -138,161 +150,28 @@ const Home = () => {
                   />
                   <View style={style.UserView}>
                     <Eye name="eye" size={20} color={'#fff'} />
-                    <Text style={style.ViewText}>20K</Text>
+                    <Text style={style.ViewText}> {value[1]?.view || ''}</Text>
                   </View>
                 </View>
                 <Image
-                  source={require('./assets/Img/AVATAR-2-The-Way-Of-Water-Trailer.png')}
+                  source={{
+                    uri: `http://192.168.222.224:3300/uploads/${value[1]?.poster}`,
+                  }}
                   style={style.Poster}
                 />
                 <View style={style.MovieRatting}>
                   <View style={style.rattingStar}>
                     <Star name="star" size={18} color={'#FFD700'} />
-                    <Text style={style.ViewText}>7.6</Text>
+                    <Text style={style.ViewText}>{value[1]?.star || ''}</Text>
                   </View>
-                  <Text style={style.ViewText}>Avatar</Text>
+                  <Text style={style.ViewText}>
+                    {value[1]?.movieName || ''}
+                  </Text>
                 </View>
               </TouchableOpacity>
             </View>
-          ) : (
-            <Text>something was worng</Text>
-          )}
-
-          {/* Movie---------------------------------------------------------------------------- Item */}
-          <View style={style.ImaeCon}>
-            <TouchableOpacity style={style.ContentImageBox}>
-              <View style={style.ContentHeder}>
-                <Text style={style.Logo}>Logo</Text>
-
-                <View style={style.UserView}>
-                  <Eye name="eye" size={20} color={'#fff'} />
-                  <Text style={style.ViewText}>20K</Text>
-                </View>
-              </View>
-              <Image
-                source={require('./assets/Img/VENOM-Movie-Collector.png')}
-                style={style.Poster}
-              />
-              <View style={style.MovieRatting}>
-                <View style={style.rattingStar}>
-                  <Star name="star" size={18} color={'#FFD700'} />
-                  <Text style={style.ViewText}>7.0</Text>
-                </View>
-                <Text style={style.ViewText}>VENOM</Text>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity style={style.ContentImageBox}>
-              <View style={style.ContentHeder}>
-                <Text style={style.Logo}>Logo</Text>
-
-                <View style={style.UserView}>
-                  <Eye name="eye" size={20} color={'#fff'} />
-                  <Text style={style.ViewText}>20K</Text>
-                </View>
-              </View>
-              <Image
-                source={require('./assets/Img/AVATAR-2-The-Way-Of-Water-Trailer.png')}
-                style={style.Poster}
-              />
-              <View style={style.MovieRatting}>
-                <View style={style.rattingStar}>
-                  <Star name="star" size={18} color={'#FFD700'} />
-                  <Text style={style.ViewText}>7.6</Text>
-                </View>
-                <Text style={style.ViewText}>Avatar</Text>
-              </View>
-            </TouchableOpacity>
-          </View>
-          {/* Movie Item */}
-          <View style={style.ImaeCon}>
-            <TouchableOpacity style={style.ContentImageBox}>
-              <View style={style.ContentHeder}>
-                <Text style={style.Logo}>Logo</Text>
-
-                <View style={style.UserView}>
-                  <Eye name="eye" size={20} color={'#fff'} />
-                  <Text style={style.ViewText}>20K</Text>
-                </View>
-              </View>
-              <Image
-                source={require('./assets/Img/VENOM-Movie-Collector.png')}
-                style={style.Poster}
-              />
-              <View style={style.MovieRatting}>
-                <View style={style.rattingStar}>
-                  <Star name="star" size={18} color={'#FFD700'} />
-                  <Text style={style.ViewText}>7.0</Text>
-                </View>
-                <Text style={style.ViewText}>VENOM</Text>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity style={style.ContentImageBox}>
-              <View style={style.ContentHeder}>
-                <Text style={style.Logo}>Logo</Text>
-
-                <View style={style.UserView}>
-                  <Eye name="eye" size={20} color={'#fff'} />
-                  <Text style={style.ViewText}>20K</Text>
-                </View>
-              </View>
-              <Image
-                source={require('./assets/Img/AVATAR-2-The-Way-Of-Water-Trailer.png')}
-                style={style.Poster}
-              />
-              <View style={style.MovieRatting}>
-                <View style={style.rattingStar}>
-                  <Star name="star" size={18} color={'#FFD700'} />
-                  <Text style={style.ViewText}>7.6</Text>
-                </View>
-                <Text style={style.ViewText}>Avatar</Text>
-              </View>
-            </TouchableOpacity>
-          </View>
-          {/* Movie Item */}
-          <View style={style.ImaeCon}>
-            <TouchableOpacity style={style.ContentImageBox}>
-              <View style={style.ContentHeder}>
-                <Text style={style.Logo}>Logo</Text>
-
-                <View style={style.UserView}>
-                  <Eye name="eye" size={20} color={'#fff'} />
-                  <Text style={style.ViewText}>20K</Text>
-                </View>
-              </View>
-              <Image
-                source={require('./assets/Img/VENOM-Movie-Collector.png')}
-                style={style.Poster}
-              />
-              <View style={style.MovieRatting}>
-                <View style={style.rattingStar}>
-                  <Star name="star" size={18} color={'#FFD700'} />
-                  <Text style={style.ViewText}>7.0</Text>
-                </View>
-                <Text style={style.ViewText}>VENOM</Text>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity style={style.ContentImageBox}>
-              <View style={style.ContentHeder}>
-                <Text style={style.Logo}>Logo</Text>
-
-                <View style={style.UserView}>
-                  <Eye name="eye" size={20} color={'#fff'} />
-                  <Text style={style.ViewText}>20K</Text>
-                </View>
-              </View>
-              <Image
-                source={require('./assets/Img/AVATAR-2-The-Way-Of-Water-Trailer.png')}
-                style={style.Poster}
-              />
-              <View style={style.MovieRatting}>
-                <View style={style.rattingStar}>
-                  <Star name="star" size={18} color={'#FFD700'} />
-                  <Text style={style.ViewText}>7.6</Text>
-                </View>
-                <Text style={style.ViewText}>Avatar</Text>
-              </View>
-            </TouchableOpacity>
-          </View>
+          ))}
+          {isFetching && <ActivityIndicator size={40} color={'#0fc'} />}
         </View>
       </ScrollView>
       <Fottor />
@@ -360,7 +239,7 @@ const style = StyleSheet.create({
     height: 40,
     borderTopRightRadius: 10,
     borderTopLeftRadius: 10,
-    //backgroundColor: '#4f58567a',
+    backgroundColor: '#4f58567a',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
