@@ -50,9 +50,10 @@ const Carousels = () => {
 
 const style = StyleSheet.create({
   sliderText: {
-    width,
+    width: width - 50,
     height: 500,
-    //padding: 5,
+
+    marginLeft: 25,
   },
 });
 

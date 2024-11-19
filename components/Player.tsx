@@ -72,8 +72,8 @@ const Player = ({route}: {route: PlayerScreenRouteProp}) => {
           <Video
             style={style.VideoStyle}
             source={{
-              uri: link,
-              // uri: 'https://drive.google.com/uc?export=download&id=10uDUhH0OiVPi8FZ56dD1toaXoBMuwLw4',
+              //uri: link,
+              uri: 'https://drive.google.com/uc?export=download&id=10uDUhH0OiVPi8FZ56dD1toaXoBMuwLw4',
             }}
             paused={isPose}
             muted={isMute}

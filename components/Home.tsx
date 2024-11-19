@@ -1,4 +1,5 @@
 import {
+  Alert,
   Image,
   ScrollView,
   StyleSheet,
@@ -6,7 +7,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import Fottor from './Fotter';
 import {RootState} from '../featurce/Store';
 import {useDispatch, useSelector} from 'react-redux';
@@ -17,6 +18,8 @@ import {ChangePage} from '../featurce/IconSlice';
 import Carousel from './Carousel';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import Orientation from 'react-native-orientation-locker';
+import {useFetchItemsQuery} from '../featurce/ApiSlice';
+// import {FlatList} from 'react-native-gesture-handler';
 // import SystemNavigationBar from 'react-native-system-navigation-bar';
 
 //Navigaror type implimant
@@ -38,19 +41,41 @@ const Home = () => {
   const SearchNavigaror = useNavigation<NewSearchScreenNavigarorProp>();
   const PlayerNavigaror = useNavigation<NewPlayerScreenNavigatorProp>();
   const dispatch = useDispatch();
-
+  const [page, setPage] = useState(1);
+  const [item, setItems] = useState([]);
   const value = useSelector((state: RootState) => state.them.mode);
-
+  const {data, error, isFetching, isLoading} = useFetchItemsQuery({page});
   useEffect(() => {
     Orientation.lockToPortrait();
     //SystemNavigationBar.fullScreen(false);
   }, []);
+  useEffect(() => {
+    if (data) {
+      setItems(Item => [...Item, ...data]);
+    }
+    // if (data[-1] == []) {
 
+    // }
+  }, [data]);
+
+  const MoreDatalode = () => {
+    setPage(newPage => newPage + 1);
+  };
   const BG = {backgroundColor: value ? '#000' : '#ddd'};
-  //const ReversBG = {backgroundColor: value ? '#ddd' : '#222'};
+  const handelScroll = ({nativeEvent}: any) => {
+    const {layoutMeasurement, contentOffset, contentSize} = nativeEvent;
+    if (layoutMeasurement.height + contentOffset.y >= contentSize.height - 20) {
+      MoreDatalode();
+    }
+  };
+  console.log(item);
+  console.log(item[item.length - 1] == '');
   return (
     <>
-      <ScrollView style={[style.Countuner, BG]}>
+      <ScrollView
+        style={[style.Countuner, BG]}
+        onScroll={handelScroll}
+        scrollEventThrottle={16}>
         <Carousel />
         <View style={style.SearchBOx}>
           <TouchableOpacity
@@ -65,59 +90,75 @@ const Home = () => {
         </View>
         <View style={style.ContentBox}>
           <Text style={style.HederText}>Most Popular</Text>
-          {/* Movie Item */}
-          <View style={style.ImaeCon}>
-            <TouchableOpacity
-              style={style.ContentImageBox}
-              onPress={() =>
-                PlayerNavigaror.navigate('Player', {
-                  itemId: 86,
-                  link: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
-                })
-              }>
-              <View style={style.ContentHeder}>
-                <Text style={style.Logo}>Logo</Text>
+          {/* Movie -----------------------------------------------------------------------------Item */}
 
-                <View style={style.UserView}>
-                  <Eye name="eye" size={20} color={'#fff'} />
-                  <Text style={style.ViewText}>20K</Text>
-                </View>
-              </View>
-              <Image
-                source={require('./assets/Img/VENOM-Movie-Collector.png')}
-                style={style.Poster}
-              />
-              <View style={style.MovieRatting}>
-                <View style={style.rattingStar}>
-                  <Star name="star" size={18} color={'#FFD700'} />
-                  <Text style={style.ViewText}>7.0</Text>
-                </View>
-                <Text style={style.ViewText}>VENOM</Text>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity style={style.ContentImageBox}>
-              <View style={style.ContentHeder}>
-                <Text style={style.Logo}>Logo</Text>
+          {!1 ? (
+            <View style={style.ImaeCon}>
+              <TouchableOpacity
+                style={style.ContentImageBox}
+                onPress={() =>
+                  PlayerNavigaror.navigate('Player', {
+                    itemId: 86,
+                    link: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+                  })
+                }>
+                <View style={style.ContentHeder}>
+                  {/* <Text style={style.Logo}>Logo</Text> */}
+                  <Image
+                    source={require('./assets/Img/Logo.png')}
+                    style={style.LogoImage}
+                  />
 
-                <View style={style.UserView}>
-                  <Eye name="eye" size={20} color={'#fff'} />
-                  <Text style={style.ViewText}>20K</Text>
+                  <View style={style.UserView}>
+                    <Eye name="eye" size={20} color={'#fff'} />
+                    <Text style={style.ViewText}>20K</Text>
+                  </View>
                 </View>
-              </View>
-              <Image
-                source={require('./assets/Img/AVATAR-2-The-Way-Of-Water-Trailer.png')}
-                style={style.Poster}
-              />
-              <View style={style.MovieRatting}>
-                <View style={style.rattingStar}>
-                  <Star name="star" size={18} color={'#FFD700'} />
-                  <Text style={style.ViewText}>7.6</Text>
+                <Image
+                  source={require('./assets/Img/VENOM-Movie-Collector.png')}
+                  style={style.Poster}
+                />
+                <View style={style.MovieRatting}>
+                  <View style={style.rattingStar}>
+                    <Star name="star" size={18} color={'#FFD700'} />
+                    <Text style={style.ViewText}>7.0</Text>
+                  </View>
+                  <Text style={style.ViewText}>VENOM</Text>
                 </View>
-                <Text style={style.ViewText}>Avatar</Text>
-              </View>
-            </TouchableOpacity>
-          </View>
-          {/* Movie Item */}
+              </TouchableOpacity>
+
+              {/* Secound ------------------------------------------------------------Item */}
+
+              <TouchableOpacity style={style.ContentImageBox}>
+                <View style={style.ContentHeder}>
+                  {/* <Text style={style.Logo}>Logo</Text> */}
+                  <Image
+                    source={require('./assets/Img/Logo.png')}
+                    style={style.LogoImage}
+                  />
+                  <View style={style.UserView}>
+                    <Eye name="eye" size={20} color={'#fff'} />
+                    <Text style={style.ViewText}>20K</Text>
+                  </View>
+                </View>
+                <Image
+                  source={require('./assets/Img/AVATAR-2-The-Way-Of-Water-Trailer.png')}
+                  style={style.Poster}
+                />
+                <View style={style.MovieRatting}>
+                  <View style={style.rattingStar}>
+                    <Star name="star" size={18} color={'#FFD700'} />
+                    <Text style={style.ViewText}>7.6</Text>
+                  </View>
+                  <Text style={style.ViewText}>Avatar</Text>
+                </View>
+              </TouchableOpacity>
+            </View>
+          ) : (
+            <Text>something was worng</Text>
+          )}
+
+          {/* Movie---------------------------------------------------------------------------- Item */}
           <View style={style.ImaeCon}>
             <TouchableOpacity style={style.ContentImageBox}>
               <View style={style.ContentHeder}>
@@ -350,6 +391,10 @@ const style = StyleSheet.create({
   },
   rattingStar: {
     flexDirection: 'row',
+  },
+  LogoImage: {
+    width: 50,
+    height: 50,
   },
 });
 export default Home;
