@@ -161,7 +161,7 @@ const Download = () => {
         <View style={style.DownloaderCon}>
           <View style={style.ImageSection}>
             <Image
-              source={require('./assets/Img/VENOM-Movie-Collector.png')}
+              source={require('./assets/Img/ad7e62db75fb5e2b182ca720fdd5229a.jpg')}
               style={style.Images}
             />
             <View style={style.TextSection}>

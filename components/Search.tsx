@@ -28,7 +28,7 @@ const Search = () => {
       <ScrollView style={[style.Countuner, BG]}>
         <TouchableOpacity style={style.ItemBox}>
           <Image
-            source={require('./assets/Img/VENOM-Movie-Collector.png')}
+            source={require('./assets/Img/6515e8772b822ebca0c44c36dba84a59.png')}
             style={style.poster}
           />
           <View style={style.TextSection}>
@@ -38,7 +38,7 @@ const Search = () => {
         </TouchableOpacity>
         <TouchableOpacity style={style.ItemBox}>
           <Image
-            source={require('./assets/Img/VENOM-Movie-Collector.png')}
+            source={require('./assets/Img/6515e8772b822ebca0c44c36dba84a59.png')}
             style={style.poster}
           />
           <View style={style.TextSection}>
@@ -48,7 +48,7 @@ const Search = () => {
         </TouchableOpacity>
         <TouchableOpacity style={style.ItemBox}>
           <Image
-            source={require('./assets/Img/VENOM-Movie-Collector.png')}
+            source={require('./assets/Img/6515e8772b822ebca0c44c36dba84a59.png')}
             style={style.poster}
           />
           <View style={style.TextSection}>
@@ -58,7 +58,7 @@ const Search = () => {
         </TouchableOpacity>
         <TouchableOpacity style={style.ItemBox}>
           <Image
-            source={require('./assets/Img/VENOM-Movie-Collector.png')}
+            source={require('./assets/Img/6515e8772b822ebca0c44c36dba84a59.png')}
             style={style.poster}
           />
           <View style={style.TextSection}>
@@ -68,7 +68,7 @@ const Search = () => {
         </TouchableOpacity>
         <TouchableOpacity style={style.ItemBox}>
           <Image
-            source={require('./assets/Img/VENOM-Movie-Collector.png')}
+            source={require('./assets/Img/6515e8772b822ebca0c44c36dba84a59.png')}
             style={style.poster}
           />
           <View style={style.TextSection}>
@@ -78,7 +78,7 @@ const Search = () => {
         </TouchableOpacity>
         <TouchableOpacity style={style.ItemBox}>
           <Image
-            source={require('./assets/Img/VENOM-Movie-Collector.png')}
+            source={require('./assets/Img/6515e8772b822ebca0c44c36dba84a59.png')}
             style={style.poster}
           />
           <View style={style.TextSection}>
@@ -88,7 +88,7 @@ const Search = () => {
         </TouchableOpacity>
         <TouchableOpacity style={style.ItemBox}>
           <Image
-            source={require('./assets/Img/VENOM-Movie-Collector.png')}
+            source={require('./assets/Img/6515e8772b822ebca0c44c36dba84a59.png')}
             style={style.poster}
           />
           <View style={style.TextSection}>
@@ -98,7 +98,7 @@ const Search = () => {
         </TouchableOpacity>
         <TouchableOpacity style={style.ItemBox}>
           <Image
-            source={require('./assets/Img/VENOM-Movie-Collector.png')}
+            source={require('./assets/Img/6515e8772b822ebca0c44c36dba84a59.png')}
             style={style.poster}
           />
           <View style={style.TextSection}>
@@ -108,7 +108,7 @@ const Search = () => {
         </TouchableOpacity>
         <TouchableOpacity style={style.ItemBox}>
           <Image
-            source={require('./assets/Img/VENOM-Movie-Collector.png')}
+            source={require('./assets/Img/6515e8772b822ebca0c44c36dba84a59.png')}
             style={style.poster}
           />
           <View style={style.TextSection}>

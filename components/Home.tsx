@@ -106,7 +106,7 @@ const Home = () => {
                 <View style={style.ContentHeder}>
                   {/* <Text style={style.Logo}>Logo</Text> */}
                   <Image
-                    source={require('./assets/Img/Logo.png')}
+                    source={require('./assets/Img/logo.png')}
                     style={style.LogoImage}
                   />
 
@@ -145,7 +145,7 @@ const Home = () => {
                 <View style={style.ContentHeder}>
                   {/* <Text style={style.Logo}>Logo</Text> */}
                   <Image
-                    source={require('./assets/Img/Logo.png')}
+                    source={require('./assets/Img/logo.png')}
                     style={style.LogoImage}
                   />
                   <View style={style.UserView}>
